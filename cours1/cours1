@@ -1,0 +1,30 @@
+--sauvegarde: ctrl+s ou ctrl + f5
+-- mysql -u nom -p (enter) et entrer le mot de passe ensuite
+--source /home/etd/BaseDeDonne/cours1/script.sql
+-- modifier dans la vm bind-address = 0.0.0.0 dans le nano /etc/mysql/mariadb.conf.d/50-server.cnf
+-- pour montrer les database: show databases;
+
+select user, host, plugin, password from mysql.user; --affichage des user / host / plugin et password
+-- administateur
+create or replace user "admin"@"%" identified by "pwd";
+grant all on *.* to "admin"@"%" with grant option;
+
+--alice
+
+create or replace user "alice"@"%" identified by "pwda";
+create database if not exists a;
+grant all on a.* to "alice"@"%";
+
+--bob l'écolier
+
+create or replace user "etd"@"localhost" identified via unix_socket;
+create database if not exists bob;
+grant all on bob.* to "etd"@"localhost";
+
+--charlie 
+
+create database if not exists c;
+grant all on c.* to "charlie"@"%" identified by "pwdc";
+
+--dave
+
