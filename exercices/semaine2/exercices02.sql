@@ -80,3 +80,19 @@ select * from tasks where actual_duration > estimated_duration;
         estimated_duration - actual_duration as `gain`
     from tasks where actual_duration < estimated_duration ;
 
+
+    select
+        name,
+        description,
+        due_date,
+        estimated_duration,
+        actual_duration,
+        completed,
+      actual_duration - estimated_duration   as `*perte*`,
+      (actual_duration - estimated_duration) / estimated_duration * 100  as `*retard*`
+
+    from tasks where actual_duration > estimated_duration ;
+
+
+
+
