@@ -51,6 +51,8 @@ VALUES
     from recipes;
 
 
-select * from recipes where preparation_time < 30;
+
+select concat(name, ": ", description) as `recette`
+from recipes where preparation_time < 30;
 
 
