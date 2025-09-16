@@ -7,22 +7,22 @@
 --source /home/etd/BaseDeDonne/exercices/semaine4/exercices1.sql
 
 
-create database if not exists cuisto;
+    create database if not exists cuisto;
 
-use cuisto;
+    use cuisto;
 
-create or replace table recipes (
+    create or replace table recipes (
     name varchar(250) not null,
     description varchar(1000),
     ingredients varchar(1000),
     steps varchar(2000),
     preparation_time int default 0,
     category varchar(50)
-);
+    );
 
-insert into
+    insert into
     recipes
-values 
+    values 
     ('Sandwich', 'Une garniture entre 2 tranches de pain', 'Pain, Garniture', 'Trancher, Garnir, Déguster', 5, 'Principal'),
     ('Sandwich', 'Du fromage entre 2 tranches de pain', 'Pain, Fromage', 'Trancher, Garnir, Griller, Déguster', 7, 'Principal'),
     ('Paté chinois', NULL, 'Steak, Blé d''inde, Patates', 'Cuire la viande, mélanger', 30, 'Principal'),
@@ -34,25 +34,35 @@ values
 
 insert into 
     recipes (name, description, category)
-values 
+    values 
     ('Pomme', 'Fruit frais', 'Collation'), 
     ('Cheddar', 'Batonnets de fromage', 'Collation'), 
     ('Craquelins', 'Petits biscuits', 'Collation');
 
-insert into 
+    insert into 
     recipes (name)
-values 
+    values 
     ('Café'), 
     ('Chocolat chaud'), 
     ('Thé');
 
-select * from recipes
-where preparation_time between 20 and 30;
+    select * from recipes
+    where preparation_time between 20 and 30;
 
-select * from recipes
-where steps like "%Cuire%"  and ingredients not like "%Patates%";
+    select * from recipes
+    where steps like "%Cuire%"  and ingredients not like "%Patates%";
 
 
-select distinct name from recipes
-order by CHAR_LENGTH(name) desc;
+    select distinct name from recipes
+    order by CHAR_LENGTH(name) desc;
 
+
+    select *,
+       round(CHAR_LENGTH(ingredients) * CHAR_LENGTH(steps) / preparation_time) AS `Complexité`
+    from recipes;
+
+    select
+    name,
+    preparation_time,
+    round(CHAR_LENGTH(ingredients) * CHAR_LENGTH(steps) / preparation_time) AS `Complexité`
+    from recipes;
