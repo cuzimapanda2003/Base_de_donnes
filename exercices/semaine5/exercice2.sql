@@ -58,16 +58,18 @@ values
 
     select
     employee,
-    count(employee) as `nombre de tâches`,
-    count(if(actual_duration is not null and completed_date is not null, 1, null)) as `tache complèté`
+    count(*) as `nombre de tâches`,
+    count(if(actual_duration is not null and completed_date is not null, 1, null)) as `tache complèté`,
+    count(if(actual_duration is not null and completed_date is null, 1, null)) as `tache en cours`,
+    count(if(actual_duration is null and completed_date is null, 1, null)) as `en attente`,
+    count(if(actual_duration is null and completed_date is not null , 1, null)) as `Annulee`,
+    max(completed_date) as `derniere completion`,
+    datediff(curdate(),max(completed_date)) as `nb jour comp`,
+    avg(datediff(completed_date,due_date)) as `moyenne`
 
 
-   
     from tasks
-    group by employee desc;
+    where completed_date < curdate()
+    group by employee
+    order by `nombre de tâches` desc;
 
-
-    --when actual_duration is null and completed_date is not null then 'Annulée'
-   -- when actual_duration is null and completed_date is null then 'En Attente'
-   -- when actual_duration is not null and completed_date is null then 'En cours'
-   -- when actual_duration is not null and completed_date is not null then 'Complétée'
