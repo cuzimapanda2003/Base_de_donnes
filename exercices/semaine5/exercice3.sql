@@ -81,4 +81,22 @@ create or replace table `flights` (
          having `nb de vol` > 40 || `temps de vol` > '350:00:00';
 
 
+         select pilot,
+         plane,
+         count(*) as `vols`,
+        time_format( sec_to_time(avg( time_to_sec(duration))), "%H:%i") as `temps de vol`
+         from flights
+         group by pilot,plane
+         having `vols` > 5;
+
+
+         select
+         number,
+         date_format(departure, "%Y-%m-%d") as `départ`,
+         date(addtime(addtime(departure, duration), delay)) as `arrivé`,
+         time_format(addtime(duration, delay), "%Hh%i") as `durée`
+         from flights
+         where  time_format(addtime(duration, delay), "%Hh%i") > 10;
+
+
          
