@@ -259,5 +259,14 @@ update sales
 set discount = 0
 where discount is null;
 
+
+select * from sales;
+
 -- **Supprimer** les ventes ne contenant aucuns articles en retournant le produit, le nom du client et la date correctement formatée
 
+DELETE FROM sales
+WHERE quantity = 0
+RETURNING
+    product,
+    substring_index(id, '-', (char_length(id) - char_length(replace(id, '-', '')))) AS client,
+    str_to_date(substring_index(id, '-', -1), '%Y%m%d') AS sale_date;
